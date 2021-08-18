@@ -45,7 +45,7 @@ export default class UserController extends Controller {
       if (ctx.request.body.password !== userInfo.password) {
         throw app.HttpException('密码错误', 403);
       }
-      //给 token
+      //配置token 签名
       const token = app.jwt.sign(
         {
           id: userInfo.id,
@@ -54,18 +54,16 @@ export default class UserController extends Controller {
         },
         app.config.jwt.secret
       );
-      throw app.Success('登录成功', token);
+      throw app.Success('登录成功', { token });
     } else {
       throw app.HttpException('用户并不存在', 404);
     }
   }
 
-  public async getUserInfoByToken() {
+  public async getUserInfo() {
     const { ctx } = this;
-    const token = ctx.helper.getToken(ctx);
 
-    const info = await ctx.app.jwt.verify(token, ctx.app.config.jwt.secret);
-    const userInfo = await ctx.service.user.getUserInfoById(info.id);
+    const userInfo = await ctx.service.user.getUserInfoByToken();
     throw ctx.app.Success('ok', userInfo);
   }
 }

@@ -8,6 +8,6 @@ export default (app: Application) => {
   router.get(
     '/api/user/getUserInfo',
     validateToken,
-    controller.user.getUserInfoByToken
+    controller.user.getUserInfo
   );
 };

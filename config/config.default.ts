@@ -45,8 +45,7 @@ export default (appInfo: EggAppInfo) => {
   // add your special config 通过 this.config 可以读取
   const bizConfig = {
     sourceUrl: `https://github.com/eggjs/examples/tree/master/${appInfo.name}`,
-    // expires: 2 * 60 * 60,
-    expires: 30,
+    expires: 2 * 60 * 60,
   };
   // the return config will combines to EggAppConfig
   return {
