@@ -1,26 +1,26 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
-    "target": "es2017",
-    "module": "commonjs",
+    "target": "es2017",//"指定ECMAScript目标版本
+    "module": "commonjs",//指定生成哪个模块系统代码
     "strict": true,
-    "noImplicitAny": false,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
+    "noImplicitAny": false,//在表达式和声明上有隐含的any类型时报错。
+    "experimentalDecorators": true,//启用实验性的ES装饰器。
+    "emitDecoratorMetadata": true,//给源码里的装饰器声明加上设计类型元数据。查看issue #2577了解更多信息。
     "charset": "utf8",
-    "allowJs": false,
-    "pretty": true,
-    "noEmitOnError": false,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "allowUnreachableCode": false,
-    "allowUnusedLabels": false,
+    "allowJs": false,//允许编译javascript文件。
+    "pretty": true,//给错误和消息设置样式，使用颜色和上下文。
+    "noEmitOnError": false,//报错时不生成输出文件。
+    "noUnusedLocals": false,//若有未使用的局部变量则抛错。
+    "noUnusedParameters": false,//若有未使用的参数则抛错。
+    "allowUnreachableCode": false,//不报告执行不到的代码错误。
+    "allowUnusedLabels": false,//不报告未使用的标签错误。
     "strictPropertyInitialization": false,
-    "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true,
+    "noFallthroughCasesInSwitch": true,//报告switch语句的fallthrough错误。
+    "skipLibCheck": true,//忽略所有的声明文件（*.d.ts）的类型检查。
     "skipDefaultLibCheck": true,
-    "inlineSourceMap": true,
-    "importHelpers": true
+    "inlineSourceMap": true,//生成单个sourcemaps文件
+    "importHelpers": true//从tslib导入辅助工具函数
   },
   "exclude": [
     "app/public",
