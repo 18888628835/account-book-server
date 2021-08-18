@@ -1,5 +1,5 @@
 {
-  "extends": "eslint-config-egg/typescript",
+  "extends": ["eslint-config-egg","plugin:prettier/recommended"],//消除 es-lint 和prettier的报错问题
   "parserOptions": {
     "project": "./tsconfig.json"
   }

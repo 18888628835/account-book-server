@@ -6,9 +6,13 @@ const plugin: EggPlugin = {
   //   enable: true,
   //   package: 'egg-view-nunjucks',
   // },
-  Sequelize: {
+  sequelize: {
     enable: true,
     package: 'egg-sequelize',
+  },
+  validate: {
+    enable: true,
+    package: 'egg-validate',
   },
 };
 

@@ -6,9 +6,9 @@ export default (appInfo: EggAppInfo) => {
   // override config from framework / plugin
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1629246903805_9311';
-
+  config.env = 'development';
   // add your egg config in here
-  config.middleware = [];
+  config.middleware = ['notfoundHandler', 'catchError'];
   // sequelize 的初始化配置
   config.sequelize = {
     dialect: 'mysql', // 数据库类型
@@ -32,11 +32,17 @@ export default (appInfo: EggAppInfo) => {
       freezeTableName: true, // 表名自由设置
     },
   };
+  config.security = {
+    csrf: {
+      enable: false,
+      ignoreJSON: true,
+    },
+    domainWhiteList: ['*'], // 配置白名单
+  };
   // add your special config in here
   const bizConfig = {
     sourceUrl: `https://github.com/eggjs/examples/tree/master/${appInfo.name}`,
   };
-
   // the return config will combines to EggAppConfig
   return {
     ...config,

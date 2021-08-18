@@ -12,6 +12,12 @@ export default app => {
     avatar: { type: STRING(50), Comment: '头像' },
     signature: { type: STRING(50), Comment: '个性签名' },
   });
-  User.sync();
+
+  if (app.config.env === 'development') {
+    User.sync({ force: true });
+  } else {
+    User.sync();
+  }
+
   return User;
 };
