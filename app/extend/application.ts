@@ -12,8 +12,8 @@ export class HttpException extends Error {
   }
 }
 export class Success extends HttpException {
-  constructor(data) {
-    super('ok', 200);
+  constructor(message, data) {
+    super(message, 200);
     this.success = true;
     this.data = data;
   }
@@ -23,7 +23,8 @@ export default {
   HttpException(msg, code) {
     return new HttpException(msg, code);
   },
-  Success(data = true) {
-    return new Success(data);
+
+  Success(message = 'ok', data: any = true) {
+    return new Success(message, data);
   },
 };

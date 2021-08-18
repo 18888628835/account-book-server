@@ -13,4 +13,12 @@ export default class User extends Service {
     const user = await ctx.model.User.create(ctx.request.body);
     return user.toJSON();
   }
+  public async getUserInfoByPhone() {
+    const { ctx } = this;
+    const userInfo = await ctx.model.User.findOne({
+      where: { phone: ctx.request.body.phone },
+    });
+    return userInfo;
+  }
+  public async getUserInfoByToken() {}
 }

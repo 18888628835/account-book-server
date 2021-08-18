@@ -32,6 +32,9 @@ export default (appInfo: EggAppInfo) => {
       freezeTableName: true, // 表名自由设置
     },
   };
+  config.jwt = {
+    secret: 'qiuyanxi', //密钥
+  };
   config.security = {
     csrf: {
       enable: false,
@@ -39,9 +42,10 @@ export default (appInfo: EggAppInfo) => {
     },
     domainWhiteList: ['*'], // 配置白名单
   };
-  // add your special config in here
+  // add your special config 通过 this.config 可以读取
   const bizConfig = {
     sourceUrl: `https://github.com/eggjs/examples/tree/master/${appInfo.name}`,
+    expires: 2 * 60 * 60,
   };
   // the return config will combines to EggAppConfig
   return {

@@ -13,11 +13,7 @@ export default app => {
     signature: { type: STRING(50), Comment: '个性签名' },
   });
 
-  if (app.config.env === 'development') {
-    User.sync({ force: true });
-  } else {
-    User.sync();
-  }
+  User.sync();
 
   return User;
 };
