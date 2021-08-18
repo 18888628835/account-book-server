@@ -8,7 +8,7 @@ export default (appInfo: EggAppInfo) => {
   config.keys = appInfo.name + '_1629246903805_9311';
   config.env = 'development';
   // add your egg config in here
-  config.middleware = ['notfoundHandler', 'catchError'];
+  config.middleware = ['catchError', 'notfoundHandler'];
   // sequelize 的初始化配置
   config.sequelize = {
     dialect: 'mysql', // 数据库类型
@@ -45,7 +45,8 @@ export default (appInfo: EggAppInfo) => {
   // add your special config 通过 this.config 可以读取
   const bizConfig = {
     sourceUrl: `https://github.com/eggjs/examples/tree/master/${appInfo.name}`,
-    expires: 2 * 60 * 60,
+    // expires: 2 * 60 * 60,
+    expires: 30,
   };
   // the return config will combines to EggAppConfig
   return {

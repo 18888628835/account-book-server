@@ -20,5 +20,11 @@ export default class User extends Service {
     });
     return userInfo;
   }
-  public async getUserInfoByToken() {}
+  public async getUserInfoById(id) {
+    const { app } = this;
+    const userInfo = await app.model.User.findOne({
+      where: { id },
+    });
+    return userInfo;
+  }
 }

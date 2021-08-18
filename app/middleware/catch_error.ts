@@ -21,7 +21,11 @@ export default () => {
         // 未知错误
         console.log(error);
         ctx.status = 500;
-        ctx.body = new HttpException('未知异常', 999, requestUrl);
+        ctx.body = new HttpException(
+          error.message || '未知异常',
+          999,
+          requestUrl
+        );
       }
     }
   };

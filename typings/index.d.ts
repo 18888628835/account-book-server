@@ -14,7 +14,7 @@ declare module 'egg' {
         secret: string,
         options?: any,
         callback?: function
-      ): string;
+      ): any;
     };
   }
 }

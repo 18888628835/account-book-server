@@ -27,7 +27,7 @@ export default class UserController extends Controller {
       { phone, password }
     );
     const userInfo = await ctx.service.user.getUserInfoByPhone();
-    if (userInfo.id) {
+    if (userInfo?.id) {
       throw app.HttpException('手机号码已存在', 200);
     }
     const result = await ctx.service.user.register();
@@ -35,14 +35,13 @@ export default class UserController extends Controller {
       throw app.Success();
     }
   }
-  public async getToken() {}
   /**
    * 登录
    */
   public async login() {
     const { ctx, app } = this;
     const userInfo = await ctx.service.user.getUserInfoByPhone();
-    if (userInfo.id) {
+    if (userInfo?.id) {
       if (ctx.request.body.password !== userInfo.password) {
         throw app.HttpException('密码错误', 403);
       }
@@ -57,7 +56,16 @@ export default class UserController extends Controller {
       );
       throw app.Success('登录成功', token);
     } else {
-      throw app.HttpException('用户并不存在', 401);
+      throw app.HttpException('用户并不存在', 404);
     }
+  }
+
+  public async getUserInfoByToken() {
+    const { ctx } = this;
+    const token = ctx.helper.getToken(ctx);
+
+    const info = await ctx.app.jwt.verify(token, ctx.app.config.jwt.secret);
+    const userInfo = await ctx.service.user.getUserInfoById(info.id);
+    throw ctx.app.Success('ok', userInfo);
   }
 }
