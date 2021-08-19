@@ -28,7 +28,11 @@
     "egg-sequelize": "^6.0.0",
     "egg-token": "^2.0.1",
     "egg-validate": "^2.0.2",
-    "mysql2": "^2.3.0"
+    "fs": "^0.0.1-security",
+    "mkdirp": "^1.0.4",
+    "moment": "^2.29.1",
+    "mysql2": "^2.3.0",
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.40",

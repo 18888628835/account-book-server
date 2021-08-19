@@ -1,5 +1,5 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/bin/yarn add --dev @types/egg-sequelize
+  /usr/local/bin/node /usr/local/bin/yarn add --dev @types/fs
 
 PATH: 
   /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
@@ -14,7 +14,7 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: https://registry.npm.taobao.org/@types%2fegg-sequelize: Not found
+  Error: https://registry.npm.taobao.org/@types%2ffs: Not found
       at Request.params.callback [as _callback] (/Users/qiuyanxi/.config/yarn/global/node_modules/yarn/lib/cli.js:66988:18)
       at Request.self.callback (/Users/qiuyanxi/.config/yarn/global/node_modules/yarn/lib/cli.js:140662:22)
       at Request.emit (events.js:315:20)
@@ -52,9 +52,12 @@ npm manifest:
     },
     "dependencies": {
       "egg": "^2.6.1",
+      "egg-jwt": "^3.1.7",
       "egg-scripts": "^2.6.0",
       "egg-sequelize": "^6.0.0",
+      "egg-token": "^2.0.1",
       "egg-validate": "^2.0.2",
+      "fs": "^0.0.1-security",
       "mysql2": "^2.3.0"
     },
     "devDependencies": {
@@ -66,6 +69,7 @@ npm manifest:
       "egg-bin": "^4.11.0",
       "egg-ci": "^1.8.0",
       "egg-mock": "^3.16.0",
+      "egg-ts-helper": "^1.26.0",
       "eslint": "^6.7.2",
       "eslint-config-egg": "^8.0.0",
       "ts-node": "^10.2.0",
@@ -1632,6 +1636,11 @@ Lockfile:
     resolved "https://registry.npm.taobao.org/astral-regex/download/astral-regex-1.0.0.tgz#6c8c3fb827dd43ee3918f27b82782ab7658a6fd9"
     integrity sha1-bIw/uCfdQ+45GPJ7gngqt2WKb9k=
   
+  async@^1.5.0:
+    version "1.5.2"
+    resolved "https://registry.nlark.com/async/download/async-1.5.2.tgz#ec6a61ae56480c0c3cb241c95618e20892f9672a"
+    integrity sha1-7GphrlZIDAw8skHJVhjiCJL5Zyo=
+  
   async@^3.2.0:
     version "3.2.1"
     resolved "https://registry.nlark.com/async/download/async-3.2.1.tgz#d3274ec66d107a47476a4c49136aacdb00665fc8"
@@ -2589,6 +2598,11 @@ Lockfile:
     dependencies:
       caniuse-lite "^1.0.30000844"
       electron-to-chromium "^1.3.47"
+  
+  buffer-equal-constant-time@1.0.1:
+    version "1.0.1"
+    resolved "https://registry.npm.taobao.org/buffer-equal-constant-time/download/buffer-equal-constant-time-1.0.1.tgz#f8e71132f7ffe6e01a5c9697a4c6f3e48d5cc819"
+    integrity sha1-+OcRMvf/5uAaXJaXpMbz5I1cyBk=
   
   buffer-from@^1.0.0, buffer-from@^1.1.0:
     version "1.1.2"
@@ -3649,6 +3663,13 @@ Lockfile:
     resolved "https://registry.npm.taobao.org/eastasianwidth/download/eastasianwidth-0.2.0.tgz#696ce2ec0aa0e6ea93a397ffcf24aa7840c827cb"
     integrity sha1-aWzi7Aqg5uqTo5f/zySqeEDIJ8s=
   
+  ecdsa-sig-formatter@1.0.11:
+    version "1.0.11"
+    resolved "https://registry.npm.taobao.org/ecdsa-sig-formatter/download/ecdsa-sig-formatter-1.0.11.tgz#ae0f0fa2d85045ef14a817daa3ce9acd0489e5bf"
+    integrity sha1-rg8PothQRe8UqBfao86azQSJ5b8=
+    dependencies:
+      safe-buffer "^5.0.1"
+  
   ee-first@1.1.1, ee-first@^1.1.1, ee-first@~1.1.1:
     version "1.1.1"
     resolved "https://registry.npm.taobao.org/ee-first/download/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
@@ -3776,6 +3797,14 @@ Lockfile:
     dependencies:
       is-type-of "^1.2.0"
       jsonp-body "^1.0.0"
+  
+  egg-jwt@^3.1.7:
+    version "3.1.7"
+    resolved "https://registry.npm.taobao.org/egg-jwt/download/egg-jwt-3.1.7.tgz#4db8d430291a2947bfdbc4bdabc585c7586a08b4"
+    integrity sha1-TbjUMCkaKUe/28S9q8WFx1hqCLQ=
+    dependencies:
+      jsonwebtoken "^8.3.0"
+      koa-jwt2 "^1.0.3"
   
   egg-logger@^2.3.2, egg-logger@^2.4.1:
     version "2.6.2"
@@ -3935,7 +3964,12 @@ Lockfile:
       mkdirp "^0.5.1"
       ylru "^1.2.1"
   
-  egg-ts-helper@^1.25.9:
+  egg-token@^2.0.1:
+    version "2.0.1"
+    resolved "https://registry.nlark.com/egg-token/download/egg-token-2.0.1.tgz#64cd082e3ee6c3e1103eec2c7dcf040ffa419c2c"
+    integrity sha1-ZM0ILj7mw+EQPuwsfc8ED/pBnCw=
+  
+  egg-ts-helper@^1.25.9, egg-ts-helper@^1.26.0:
     version "1.26.0"
     resolved "https://registry.nlark.com/egg-ts-helper/download/egg-ts-helper-1.26.0.tgz#7717bb5eaea61c8c154b70c9f2ed826d4119b53e"
     integrity sha1-dxe7Xq6mHIwVS3DJ8u2CbUEZtT4=
@@ -4901,6 +4935,11 @@ Lockfile:
     version "1.0.0"
     resolved "https://registry.nlark.com/fs.realpath/download/fs.realpath-1.0.0.tgz#1504ad2523158caa40db4a2787cb01411994ea4f"
     integrity sha1-FQStJSMVjKpA20onh8sBQRmU6k8=
+  
+  fs@^0.0.1-security:
+    version "0.0.1-security"
+    resolved "https://registry.npm.taobao.org/fs/download/fs-0.0.1-security.tgz#8a7bd37186b6dddf3813f23858b57ecaaf5e41d4"
+    integrity sha1-invTcYa23d84E/I4WLV+yq9eQdQ=
   
   fsevents@~2.3.2:
     version "2.3.2"
@@ -6097,6 +6136,22 @@ Lockfile:
     resolved "https://registry.npm.taobao.org/jsonp-body/download/jsonp-body-1.0.0.tgz#e610fb6fcea79cf0cc9f27baa7b56377d4b0bb36"
     integrity sha1-5hD7b86nnPDMnye6p7Vjd9SwuzY=
   
+  jsonwebtoken@^8.1.0, jsonwebtoken@^8.3.0:
+    version "8.5.1"
+    resolved "https://registry.npm.taobao.org/jsonwebtoken/download/jsonwebtoken-8.5.1.tgz#00e71e0b8df54c2121a1f26137df2280673bcc0d"
+    integrity sha1-AOceC431TCEhofJhN98igGc7zA0=
+    dependencies:
+      jws "^3.2.2"
+      lodash.includes "^4.3.0"
+      lodash.isboolean "^3.0.3"
+      lodash.isinteger "^4.0.4"
+      lodash.isnumber "^3.0.3"
+      lodash.isplainobject "^4.0.6"
+      lodash.isstring "^4.0.1"
+      lodash.once "^4.0.0"
+      ms "^2.1.1"
+      semver "^5.6.0"
+  
   "jsx-ast-utils@^2.4.1 || ^3.0.0", jsx-ast-utils@^3.1.0:
     version "3.2.0"
     resolved "https://registry.nlark.com/jsx-ast-utils/download/jsx-ast-utils-3.2.0.tgz#41108d2cec408c3453c1bbe8a4aae9e1e2bd8f82"
@@ -6124,6 +6179,23 @@ Lockfile:
       pako "~1.0.2"
       readable-stream "~2.3.6"
       set-immediate-shim "~1.0.1"
+  
+  jwa@^1.4.1:
+    version "1.4.1"
+    resolved "https://registry.npm.taobao.org/jwa/download/jwa-1.4.1.tgz#743c32985cb9e98655530d53641b66c8645b039a"
+    integrity sha1-dDwymFy56YZVUw1TZBtmyGRbA5o=
+    dependencies:
+      buffer-equal-constant-time "1.0.1"
+      ecdsa-sig-formatter "1.0.11"
+      safe-buffer "^5.0.1"
+  
+  jws@^3.2.2:
+    version "3.2.2"
+    resolved "https://registry.nlark.com/jws/download/jws-3.2.2.tgz#001099f3639468c9414000e99995fa52fb478304"
+    integrity sha1-ABCZ82OUaMlBQADpmZX6UvtHgwQ=
+    dependencies:
+      jwa "^1.4.1"
+      safe-buffer "^5.0.1"
   
   keygrip@~1.1.0:
     version "1.1.0"
@@ -6203,6 +6275,17 @@ Lockfile:
     resolved "https://registry.npm.taobao.org/koa-is-json/download/koa-is-json-1.0.0.tgz#273c07edcdcb8df6a2c1ab7d59ee76491451ec14"
     integrity sha1-JzwH7c3Ljfaiwat9We52SRRR7BQ=
   
+  koa-jwt2@^1.0.3:
+    version "1.0.3"
+    resolved "https://registry.npm.taobao.org/koa-jwt2/download/koa-jwt2-1.0.3.tgz#a80309800d0bb2c0f957b8b2cecc2cae0444f219"
+    integrity sha1-qAMJgA0LssD5V7iyzswsrgRE8hk=
+    dependencies:
+      async "^1.5.0"
+      jsonwebtoken "^8.1.0"
+      koa-unless "^1.0.7"
+      lodash.isfunction "^3.0.9"
+      lodash.set "^4.0.0"
+  
   koa-locales@^1.11.0:
     version "1.12.0"
     resolved "https://registry.npm.taobao.org/koa-locales/download/koa-locales-1.12.0.tgz#0c2a7082947a9263afc25ba73b68af6a2201f09d"
@@ -6255,6 +6338,11 @@ Lockfile:
       fs-readdir-recursive "^1.0.0"
       mime-types "^2.1.8"
       mz "^2.7.0"
+  
+  koa-unless@^1.0.7:
+    version "1.0.7"
+    resolved "https://registry.npm.taobao.org/koa-unless/download/koa-unless-1.0.7.tgz#b9df375e2b4da3043918d48622520c2c0b79f032"
+    integrity sha1-ud83XitNowQ5GNSGIlIMLAt58DI=
   
   koa@^2.7.0:
     version "2.13.1"
@@ -6458,6 +6546,11 @@ Lockfile:
     resolved "https://registry.npm.taobao.org/lodash.has/download/lodash.has-4.5.2.tgz#d19f4dc1095058cccbe2b0cdf4ee0fe4aa37c862"
     integrity sha1-0Z9NwQlQWMzL4rDN9O4P5Ko3yGI=
   
+  lodash.includes@^4.3.0:
+    version "4.3.0"
+    resolved "https://registry.npm.taobao.org/lodash.includes/download/lodash.includes-4.3.0.tgz#60bb98a87cb923c68ca1e51325483314849f553f"
+    integrity sha1-YLuYqHy5I8aMoeUTJUgzFISfVT8=
+  
   lodash.invert@^4.3.0:
     version "4.3.0"
     resolved "https://registry.npm.taobao.org/lodash.invert/download/lodash.invert-4.3.0.tgz#8ffe20d4b616f56bea8f1aa0c6ebd80dcf742aee"
@@ -6482,6 +6575,11 @@ Lockfile:
     version "3.0.9"
     resolved "https://registry.npm.taobao.org/lodash.isfunction/download/lodash.isfunction-3.0.9.tgz#06de25df4db327ac931981d1bdb067e5af68d051"
     integrity sha1-Bt4l302zJ6yTGYHRvbBn5a9o0FE=
+  
+  lodash.isinteger@^4.0.4:
+    version "4.0.4"
+    resolved "https://registry.npm.taobao.org/lodash.isinteger/download/lodash.isinteger-4.0.4.tgz#619c0af3d03f8b04c31f5882840b77b11cd68343"
+    integrity sha1-YZwK89A/iwTDH1iChAt3sRzWg0M=
   
   lodash.isnumber@^3.0.3:
     version "3.0.3"
@@ -6533,6 +6631,11 @@ Lockfile:
     resolved "https://registry.npm.taobao.org/lodash.omit/download/lodash.omit-4.5.0.tgz#6eb19ae5a1ee1dd9df0b969e66ce0b7fa30b5e60"
     integrity sha1-brGa5aHuHdnfC5aeZs4Lf6MLXmA=
   
+  lodash.once@^4.0.0:
+    version "4.1.1"
+    resolved "https://registry.npm.taobao.org/lodash.once/download/lodash.once-4.1.1.tgz#0dd3971213c7c56df880977d504c88fb471a97ac"
+    integrity sha1-DdOXEhPHxW34gJd9UEyI+0cal6w=
+  
   lodash.orderby@^4.6.0:
     version "4.6.0"
     resolved "https://registry.npm.taobao.org/lodash.orderby/download/lodash.orderby-4.6.0.tgz#e697f04ce5d78522f54d9338b32b81a3393e4eb3"
@@ -6548,7 +6651,7 @@ Lockfile:
     resolved "https://registry.npm.taobao.org/lodash.reduce/download/lodash.reduce-4.6.0.tgz#f1ab6b839299ad48f784abbf476596f03b914d3b"
     integrity sha1-8atrg5KZrUj3hKu/R2WW8DuRTTs=
   
-  lodash.set@^4.3.2:
+  lodash.set@^4.0.0, lodash.set@^4.3.2:
     version "4.3.2"
     resolved "https://registry.npm.taobao.org/lodash.set/download/lodash.set-4.3.2.tgz#d8757b1da807dde24816b0d6a84bea1a76230b23"
     integrity sha1-2HV7HagH3eJIFrDWqEvqGnYjCyM=
@@ -8427,7 +8530,7 @@ Lockfile:
     resolved "https://registry.nlark.com/safe-buffer/download/safe-buffer-5.1.2.tgz#991ec69d296e0313747d59bdfd2b745c35f8828d"
     integrity sha1-mR7GnSluAxN0fVm9/St0XDX4go0=
   
-  safe-buffer@~5.2.0:
+  safe-buffer@^5.0.1, safe-buffer@~5.2.0:
     version "5.2.1"
     resolved "https://registry.nlark.com/safe-buffer/download/safe-buffer-5.2.1.tgz#1eaf9fa9bdb1fdd4ec75f58f9cdb4e6b7827eec6"
     integrity sha1-Hq+fqb2x/dTsdfWPnNtOa3gn7sY=
