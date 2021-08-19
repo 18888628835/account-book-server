@@ -65,7 +65,7 @@ public
 
 - egg-jwt
 - egg-sequelize
-- egg validate
+- egg-validate
 
 ## QuickStart
 

@@ -2,7 +2,7 @@ import { Application } from 'egg';
 
 export default (app: Application) => {
   const {
-    controller: { user, upload },
+    controller: { user, upload, bill },
     router,
     middleware,
   } = app;
@@ -11,4 +11,5 @@ export default (app: Application) => {
   router.get('/api/user/getUserInfo', validateToken, user.getUserInfo);
   router.put('/api/user/editUserInfo', validateToken, user.editUserInfo);
   router.post('/api/user/upload', upload.uploadFiles);
+  router.post('/api/bill/add', validateToken, bill.add);
 };

@@ -72,6 +72,11 @@ export default class User extends Service {
     });
     return userInfo;
   }
+  /**
+   * 根据用户 id 修改信息
+   * @param id 用户 id
+   * @returns [0]或者[1]
+   */
   public async editUserInfoById(id: number) {
     const { ctx } = this;
     const result = await ctx.model.User.update(
