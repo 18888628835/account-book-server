@@ -31,4 +31,16 @@ export default class UserController extends Controller {
     const userInfo = await ctx.service.user.getUserInfoByToken();
     throw ctx.app.Success('ok', userInfo);
   }
+  /**
+   * 修改用户信息：头像、用户名、个性签名等
+   */
+  public async editUserInfo() {
+    const { ctx, app } = this;
+    const userInfo = await ctx.service.user.getUserInfoByToken();
+    const result = await ctx.service.user.editUserInfoById(userInfo.id);
+    if (result[0]) {
+      throw app.Success('修改成功', true);
+    }
+    throw app.HttpException('参数不正确,信息未修改成功', 400);
+  }
 }

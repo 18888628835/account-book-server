@@ -72,4 +72,14 @@ export default class User extends Service {
     });
     return userInfo;
   }
+  public async editUserInfoById(id: number) {
+    const { ctx } = this;
+    const result = await ctx.model.User.update(
+      { ...ctx.request.body },
+      {
+        where: { id },
+      }
+    );
+    return result;
+  }
 }
