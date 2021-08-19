@@ -5,10 +5,9 @@ export default () => {
     await next();
     if (ctx.status === 404 && !ctx.body) {
       if (ctx.acceptJSON) {
-        ctx.status = 404;
         ctx.body = new HttpException('Not Found', 404);
       } else {
-        ctx.body = '<h1>Page Not Found</h1>';
+        ctx.body = '<h1>Not Found</h1>';
       }
     }
   };
