@@ -8,10 +8,21 @@ export default class Bill extends Service {
    */
   public async addBillById(id: number) {
     const { ctx, app } = this;
+    const { date, ...restFields } = ctx.request.body;
     const result = await app.model.Bill.create({
-      ...ctx.request.body,
+      ...restFields,
+      date: date || Date.now(),
       userId: id,
     });
     return result;
+  }
+  public async getUserBillsById(id: number) {
+    const { app } = this;
+    const bills = await app.model.Bill.findAll({
+      where: {
+        userId: id,
+      },
+    });
+    return bills;
   }
 }

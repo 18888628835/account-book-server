@@ -19,7 +19,7 @@ export default (appInfo: EggAppInfo) => {
     password: '123456', // 密码
     timezone: '+08:00', // 东八区时间
     dialectOptions: {
-      dateStrings: true, // 查看时间时显示为 string
+      dateStrings: true, // 时间自动转化为 string
       typeCast(field, next) {
         if (field.type === 'DATETIME') {
           return field.string();
