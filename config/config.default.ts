@@ -18,15 +18,6 @@ export default (appInfo: EggAppInfo) => {
     username: 'root', // 账号
     password: '123456', // 密码
     timezone: '+08:00', // 东八区时间
-    dialectOptions: {
-      dateStrings: true, // 时间自动转化为 string
-      typeCast(field, next) {
-        if (field.type === 'DATETIME') {
-          return field.string();
-        }
-        return next();
-      },
-    },
     define: {
       underscored: true, // 驼峰命名小写
       freezeTableName: true, // 表名自由设置

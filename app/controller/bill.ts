@@ -16,11 +16,27 @@ export default class BillController extends Controller {
 
     throw app.Success('ok');
   }
+  /**
+   * 获取用户所有账单
+   */
   public async getUserBills() {
     const { ctx, app } = this;
     const userInfo = await ctx.service.user.getUserInfoByToken();
     const userBills = await ctx.service.bill.getUserBillsById(userInfo.id);
 
     throw app.Success('ok', userBills);
+  }
+  // 获取月份账单数据
+  public async getBillsForMonth() {
+    const { ctx, app } = this;
+    const { month } = ctx.request.query;
+
+    const userInfo = await ctx.service.user.getUserInfoByToken();
+    const monthBills = await ctx.service.bill.getBillsByMonth(
+      userInfo.id,
+      month
+    );
+
+    throw app.Success('ok', monthBills);
   }
 }
