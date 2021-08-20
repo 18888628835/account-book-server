@@ -46,6 +46,7 @@ export default class Bill extends Service {
     //获取用户传入月份第一天到最后一天的数据
     const result = app.model.Bill.findAll({
       where: { userId: id, date: { [Op.between]: [firstDay, lastDay] } },
+      order: ['date'],
     });
     return result;
   }

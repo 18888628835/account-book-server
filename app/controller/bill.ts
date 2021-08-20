@@ -26,7 +26,9 @@ export default class BillController extends Controller {
 
     throw app.Success('ok', userBills);
   }
-  // 获取月份账单数据
+  /**
+   * 获取指定月份的账单数据
+   */
   public async getBillsForMonth() {
     const { ctx, app } = this;
     const { month } = ctx.request.query;
@@ -36,7 +38,7 @@ export default class BillController extends Controller {
       userInfo.id,
       month
     );
-
-    throw app.Success('ok', monthBills);
+    const result = ctx.helper.handleMonthBills(monthBills);
+    throw app.Success('ok', result);
   }
 }
