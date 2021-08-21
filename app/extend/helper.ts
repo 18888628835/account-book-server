@@ -33,26 +33,33 @@ module.exports = {
     });
   },
   handleMonthBills(MonthBills: BillsData.record[]) {
-    const map: Map<string, BillsData.record[]> = new Map();
+    const hashMap: Map<string, BillsData.record[]> = new Map();
     //按照日期归类
     for (let item of MonthBills) {
       let attr = moment(item.date).format('MM-DD');
-      if (map.get(attr)) {
-        map.get(attr)!.push(item);
+      if (hashMap.get(attr)) {
+        hashMap.get(attr)!.push(item);
         continue;
       }
-      map.set(attr, [item]);
+      hashMap.set(attr, [item]);
     }
 
     const bills: any[] = [];
-    map.forEach((value, key) => {
+    hashMap.forEach((value, key) => {
       let temp = {};
+      //计算 支出和收入
+      const total = value.reduce(
+        (preTotal, cur) =>
+          cur.payType === 1
+            ? {
+                ...preTotal,
+                income: Number(cur.amount) + preTotal.income,
+              }
+            : { ...preTotal, outlay: Number(cur.amount) + preTotal.outlay },
+        { income: 0, outlay: 0 }
+      );
+      Object.assign(temp, total);
       temp['time'] = key;
-      //计算 total
-      const total = value.reduce((preTotal, cur) => {
-        return Number(cur.amount) + preTotal;
-      }, 0);
-      temp['total'] = total;
       temp['data'] = value;
       bills.push(temp);
     });
