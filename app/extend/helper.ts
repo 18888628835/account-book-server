@@ -32,11 +32,14 @@ module.exports = {
       });
     });
   },
-  handleMonthBills(MonthBills: BillsData.record[]) {
-    const hashMap: Map<string, BillsData.record[]> = new Map();
+  handleBills(
+    MonthBills: BillsData.Record[],
+    mode: 'MM-DD' | 'YYYY-MM' = 'MM-DD'
+  ): BillsData.Bills[] {
+    const hashMap: Map<string, BillsData.Record[]> = new Map();
     //按照日期归类
     for (let item of MonthBills) {
-      let attr = moment(item.date).format('MM-DD');
+      let attr = moment(item.date).format(mode);
       if (hashMap.get(attr)) {
         hashMap.get(attr)!.push(item);
         continue;
@@ -44,9 +47,9 @@ module.exports = {
       hashMap.set(attr, [item]);
     }
 
-    const bills: any[] = [];
+    const bills: BillsData.Bills[] = [];
     hashMap.forEach((value, key) => {
-      let temp = {};
+      let temp: BillsData.Bills = { time: '', data: [], income: 0, outlay: 0 };
       //计算 支出和收入
       const total = value.reduce(
         (preTotal, cur) =>
@@ -65,5 +68,14 @@ module.exports = {
     });
 
     return bills;
+  },
+  getTotalByTime(monthBills: BillsData.Bills[]): BillsData.TotalGroup {
+    return monthBills.reduce(
+      (preTotal, cur) => ({
+        totalIncome: cur.income + preTotal.totalIncome,
+        totalOutlay: cur.outlay + preTotal.totalOutlay,
+      }),
+      { totalIncome: 0, totalOutlay: 0 }
+    );
   },
 };
