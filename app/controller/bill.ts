@@ -58,8 +58,10 @@ export default class BillController extends Controller {
   public async getBillsByDate() {
     const { ctx, app } = this;
     const { year, month } = ctx.request.query;
-    let timeMode: 'month' | 'year' = month ? 'month' : 'year';
-    let mode: 'MM-DD' | 'YYYY-MM' = month ? 'MM-DD' : 'YYYY-MM';
+    type TimeMode = 'month' | 'year';
+    type Mode = 'MM-DD' | 'YYYY-MM';
+    let timeMode: TimeMode = month ? 'month' : 'year';
+    let mode: Mode = month ? 'MM-DD' : 'YYYY-MM';
 
     const userInfo = await ctx.service.user.getUserInfoByToken();
     const bills = await ctx.service.bill.getBillsByDate(

@@ -1,5 +1,5 @@
 export default app => {
-  const { STRING, INTEGER, DATE } = app.Sequelize;
+  const { STRING, INTEGER, DATE, BOOLEAN } = app.Sequelize;
   const Bill = app.model.define('bills', {
     payType: {
       type: INTEGER(11),
@@ -11,6 +11,12 @@ export default app => {
     typeId: { type: INTEGER(11), comment: '标签 id' },
     userId: { type: INTEGER(11), comment: '对应的用户 id' },
     remark: { type: STRING(50), comment: '账单备注' },
+    deleteFlag: {
+      type: BOOLEAN,
+      comment: 'true删除,false未删',
+      allowNull: false,
+      defaultValue: false,
+    },
   });
 
   Bill.sync();

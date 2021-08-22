@@ -90,7 +90,11 @@ export default class Bill extends Service {
     let lastDay = moment(timeString, 'YYYY-MM').endOf(mode).format();
     //获取用户传入年份或月份第一天到最后一天的数据
     const result = app.model.Bill.findAll({
-      where: { userId: id, date: { [Op.between]: [firstDay, lastDay] } },
+      where: {
+        userId: id,
+        deleteFlag: false,
+        date: { [Op.between]: [firstDay, lastDay] },
+      },
       order: ['date'],
     });
     return result;
