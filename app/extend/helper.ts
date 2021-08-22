@@ -32,13 +32,13 @@ module.exports = {
       });
     });
   },
-  handleBills(
-    MonthBills: BillsData.Record[],
+  handleBillsClassificatory(
+    billDetails: BillsData.Record[],
     mode: 'MM-DD' | 'YYYY-MM' = 'MM-DD'
   ): BillsData.Bills[] {
     const hashMap: Map<string, BillsData.Record[]> = new Map();
     //按照日期归类
-    for (let item of MonthBills) {
+    for (let item of billDetails) {
       let attr = moment(item.date).format(mode);
       if (hashMap.get(attr)) {
         hashMap.get(attr)!.push(item);
@@ -49,7 +49,7 @@ module.exports = {
 
     const bills: BillsData.Bills[] = [];
     hashMap.forEach((value, key) => {
-      let temp: BillsData.Bills = { time: '', data: [], income: 0, outlay: 0 };
+      let temp: BillsData.Bills = { time: '', income: 0, outlay: 0, data: [] };
       //计算 支出和收入
       const total = value.reduce(
         (preTotal, cur) =>
@@ -61,16 +61,17 @@ module.exports = {
             : { ...preTotal, outlay: Number(cur.amount) + preTotal.outlay },
         { income: 0, outlay: 0 }
       );
-      Object.assign(temp, total);
       temp['time'] = key;
       temp['data'] = value;
+      Object.assign(temp, total);
       bills.push(temp);
     });
 
     return bills;
   },
-  getTotalByTime(monthBills: BillsData.Bills[]): BillsData.TotalGroup {
-    return monthBills.reduce(
+  //获取收入和支出的总和
+  getTotal(billDetails: BillsData.Bills[]): BillsData.TotalGroup {
+    return billDetails.reduce(
       (preTotal, cur) => ({
         totalIncome: cur.income + preTotal.totalIncome,
         totalOutlay: cur.outlay + preTotal.totalOutlay,

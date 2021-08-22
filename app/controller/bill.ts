@@ -55,20 +55,38 @@ export default class BillController extends Controller {
    * 返回用户每年每月或者每月每日的账单数据
    * @params year=2021 mont=2021-2
    */
-  public async getBills() {
+  public async getBillsByDate() {
     const { ctx, app } = this;
     const { year, month } = ctx.request.query;
     let timeMode: 'month' | 'year' = month ? 'month' : 'year';
     let mode: 'MM-DD' | 'YYYY-MM' = month ? 'MM-DD' : 'YYYY-MM';
+
     const userInfo = await ctx.service.user.getUserInfoByToken();
-    const bills = await ctx.service.bill.getBills(
+    const bills = await ctx.service.bill.getBillsByDate(
       userInfo.id,
       month || year,
       timeMode
     );
 
-    const result = ctx.helper.handleBills(bills, mode);
-    const total = ctx.helper.getTotalByTime(result);
+    const result = ctx.helper.handleBillsClassificatory(bills, mode);
+    const total = ctx.helper.getTotal(result);
     throw app.Success('ok', { ...total, list: result });
+  }
+  /**
+   * 修改账单
+   */
+  public async updateBill() {
+    const { ctx, app } = this;
+    const { id, ...rest } = ctx.request.body;
+    if (!id) {
+      throw app.HttpException('id不存在', 400);
+    }
+    if (rest.payType && rest.payType !== 1 && rest.payType !== 2) {
+      throw app.HttpException('账单类型不正确', 400);
+    }
+    const result = await ctx.service.bill.updateBillById();
+    if (result[0]) {
+      throw app.Success();
+    }
   }
 }

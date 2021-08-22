@@ -13,7 +13,8 @@ export default (app: Application) => {
   router.post('/api/user/upload', upload.uploadFiles);
   router.post('/api/bill/add', validateToken, bill.add);
   router.get('/api/bill/getUserBills', validateToken, bill.getUserBills);
-  router.get('/api/bill/getBills', validateToken, bill.getBills);
+  router.get('/api/bill/getBillsByDate', validateToken, bill.getBillsByDate);
+  router.put('/api/bill/updateBill', validateToken, bill.updateBill);
   // router.get(
   //   '/api/bill/getBillsForMonth',
   //   validateToken,

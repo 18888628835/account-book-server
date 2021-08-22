@@ -74,10 +74,10 @@ export default class Bill extends Service {
   /**
    *
    * @param id 用户 id
-   * @param month 想要查询的月份或年份 示例:2020 2020-8
+   * @param timeString 想要查询的月份或年份 示例:2020 2020-8
    * @param mode year 或者 month
    */
-  public async getBills(
+  public async getBillsByDate(
     id: number,
     timeString: string,
     mode: 'year' | 'month'
@@ -93,6 +93,17 @@ export default class Bill extends Service {
       where: { userId: id, date: { [Op.between]: [firstDay, lastDay] } },
       order: ['date'],
     });
+    return result;
+  }
+  /**
+   * 通过 id 修改对应账单的信息
+   * @returns 修改成功[1] 修改失败[0]
+   */
+  public async updateBillById() {
+    const { ctx, app } = this;
+    const { id, ...rest } = ctx.request.body;
+
+    const result = await app.model.Bill.update({ ...rest }, { where: { id } });
     return result;
   }
 }
