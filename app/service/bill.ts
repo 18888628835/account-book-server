@@ -29,7 +29,7 @@ export default class Bill extends Service {
       where: {
         userId: userInfo.id,
       },
-      order: ['date'],
+      order: [['date', 'DESC']],
     });
     return bills;
   }
@@ -95,7 +95,7 @@ export default class Bill extends Service {
         deleteFlag: false,
         date: { [Op.between]: [firstDay, lastDay] },
       },
-      order: ['date'],
+      order: [['date', 'DESC']],
     });
     return result;
   }

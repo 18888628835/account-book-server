@@ -5,8 +5,9 @@ import moment = require('moment');
 module.exports = {
   getToken(ctx: Context): string | undefined {
     const authorization = ctx.request.header?.authorization as string;
-    if (authorization) {
-      let [_, token] = authorization.split(' ');
+
+    let [_, token] = authorization.split(' ');
+    if (token !== 'null') {
       return token;
     }
     return undefined;
@@ -50,10 +51,10 @@ module.exports = {
     const bills: BillsData.Bills[] = [];
     hashMap.forEach((value, key) => {
       let temp: BillsData.Bills = { time: '', income: 0, outlay: 0, data: [] };
-      //计算 支出和收入
+      //计算 支出和收入 1支出 2收入
       const total = value.reduce(
         (preTotal, cur) =>
-          cur.payType === 1
+          cur.payType === 2
             ? {
                 ...preTotal,
                 income: Number(cur.amount) + preTotal.income,

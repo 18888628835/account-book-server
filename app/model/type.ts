@@ -5,7 +5,7 @@ export default app => {
       type: STRING(50),
       comment: '标签分类名',
     },
-    type: { type: INTEGER(11), comment: '标签类型 1为收入 2为支出' },
+    type: { type: INTEGER(11), comment: '标签类型 1为支出 2为收入' },
   });
 
   Type.sync();

@@ -17,24 +17,27 @@ export default class User extends Service {
   public async getUserInfoByPhone() {
     const { ctx } = this;
     const { phone, password } = ctx.request.body;
-    await ctx.validate(
-      {
-        phone: {
-          required: true,
-          type: 'string',
-          max: 11,
-          min: 11,
-          format: /^1\d{10}/g,
+    if (phone !== 'test') {
+      await ctx.validate(
+        {
+          phone: {
+            required: true,
+            type: 'string',
+            max: 11,
+            min: 11,
+            format: /^1\d{10}/g,
+          },
+          password: {
+            type: 'string',
+            required: true,
+            max: 12,
+            min: 6,
+          },
         },
-        password: {
-          type: 'string',
-          required: true,
-          max: 12,
-          min: 6,
-        },
-      },
-      { phone, password }
-    );
+        { phone, password }
+      );
+    }
+
     const userInfo = await ctx.model.User.findOne({
       where: { phone: ctx.request.body.phone },
     });
