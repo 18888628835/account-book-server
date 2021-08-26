@@ -1,6 +1,12 @@
 import { Context } from 'egg';
 import * as fs from 'fs';
+import { all, create } from 'mathjs';
 import moment = require('moment');
+const config = {
+  number: 'BigNumber',
+  precision: 20,
+};
+const math: any = create(all, config);
 
 module.exports = {
   getToken(ctx: Context): string | undefined {
@@ -53,15 +59,25 @@ module.exports = {
       let temp: BillsData.Bills = { time: '', income: 0, outlay: 0, data: [] };
       //计算 支出和收入 1支出 2收入
       const total = value.reduce(
-        (preTotal, cur) =>
-          cur.payType === 2
+        (preTotal, cur) => {
+          return cur.payType === 2
             ? {
                 ...preTotal,
-                income: Number(cur.amount) + preTotal.income,
+                income: Number(
+                  math.evaluate(`${cur.amount}+${preTotal.income}`)
+                ),
               }
-            : { ...preTotal, outlay: Number(cur.amount) + preTotal.outlay },
+            : {
+                ...preTotal,
+                // outlay: parseFloat(cur.amount) + preTotal.outlay,
+                outlay: Number(
+                  math.evaluate(`${cur.amount}+${preTotal.outlay}`)
+                ),
+              };
+        },
         { income: 0, outlay: 0 }
       );
+
       temp['time'] = key;
       temp['data'] = value;
       Object.assign(temp, total);
