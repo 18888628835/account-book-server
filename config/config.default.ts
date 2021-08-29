@@ -33,9 +33,9 @@ export default (appInfo: EggAppInfo) => {
     },
     domainWhiteList: ['*'], // 配置白名单
   };
-  config.multipart = {
-    mode: 'file',
-  };
+  // config.multipart = {
+  //   mode: 'file',
+  // };
   // add your special config 通过 this.config 可以读取
   const bizConfig = {
     sourceUrl: `https://github.com/eggjs/examples/tree/master/${appInfo.name}`,
