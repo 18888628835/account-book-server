@@ -46,6 +46,7 @@ export default class UploadController extends Controller {
     const { ctx, app } = this;
     //读取文件
     const readStream = await ctx.getFileStream();
+
     let targetPath;
     try {
       //以天为单位，创建当天保存的目录名 2021-xx-xx

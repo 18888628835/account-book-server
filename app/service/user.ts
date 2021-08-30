@@ -90,4 +90,26 @@ export default class User extends Service {
     );
     return result;
   }
+  /**
+   *
+   * @param id 用户 id
+   * @param date 前端传入的时间
+   * @returns 增加的信息
+   */
+  public async clockInById(id: number, date: Date) {
+    const { ctx } = this;
+    const result = await ctx.model.ClockIn.create({
+      userId: id,
+      date: date || Date.now(),
+    });
+    return result;
+  }
+  public async getClockInTimesById(userId: number) {
+    const { ctx } = this;
+    const result = await ctx.model.ClockIn.findAll({
+      where: { userId },
+      order: [['date', 'DESC']],
+    });
+    return result;
+  }
 }

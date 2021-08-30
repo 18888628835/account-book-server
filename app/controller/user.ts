@@ -1,4 +1,5 @@
 import { Controller } from 'egg';
+import moment = require('moment');
 
 export default class UserController extends Controller {
   /**
@@ -29,7 +30,21 @@ export default class UserController extends Controller {
   public async getUserInfo() {
     const { ctx } = this;
     const userInfo = await ctx.service.user.getUserInfoByToken();
-    throw ctx.app.Success('ok', userInfo);
+    const clockInInfo = await ctx.service.user.getClockInTimesById(userInfo.id);
+    let todayClockIn = false;
+
+    function getToday(time) {
+      return moment(time).format('YYYY-MM-DD');
+    }
+
+    if (getToday(clockInInfo[0]?.date) === getToday(Date.now())) {
+      todayClockIn = true;
+    }
+    throw ctx.app.Success('ok', {
+      ...userInfo.toJSON(),
+      clockInTimes: clockInInfo.length,
+      todayClockIn,
+    });
   }
   /**
    * 修改用户信息：头像、用户名、个性签名等
@@ -42,5 +57,17 @@ export default class UserController extends Controller {
       throw app.Success('修改成功', true);
     }
     throw app.HttpException('参数不正确,信息未修改成功', 400);
+  }
+  /**
+   * 打卡
+   */
+  public async clockIn() {
+    const { ctx } = this;
+    const { date } = ctx.request.body;
+    const userInfo = await ctx.service.user.getUserInfoByToken();
+    const result = await ctx.service.user.clockInById(userInfo.id, date);
+    if (result.id) {
+      throw ctx.app.Success('ok');
+    }
   }
 }
