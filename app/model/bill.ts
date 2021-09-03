@@ -8,7 +8,12 @@ export default app => {
     },
     amount: { type: STRING(50), comment: '账单价格' },
     date: { type: DATE, comment: '账单日期' },
-    typeId: { type: INTEGER(11), comment: '标签 id' },
+    typeName: {
+      type: STRING(50),
+      unique: true,
+      allowNull: false,
+      comment: '标签的className',
+    },
     userId: { type: INTEGER(11), comment: '对应的用户 id' },
     remark: { type: STRING(50), comment: '账单备注' },
     deleteFlag: {

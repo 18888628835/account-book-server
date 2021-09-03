@@ -66,8 +66,12 @@ export default class UserController extends Controller {
     const { date } = ctx.request.body;
     const userInfo = await ctx.service.user.getUserInfoByToken();
     const result = await ctx.service.user.clockInById(userInfo.id, date);
+
     if (result.id) {
-      throw ctx.app.Success('ok');
+      const clockInTimes = await ctx.service.user.getClockInTimesById(
+        userInfo.id
+      );
+      throw ctx.app.Success('ok', { clockInTimes });
     }
   }
 }
