@@ -1,5 +1,5 @@
 export default app => {
-  const { STRING, BOOLEAN, INTEGER } = app.Sequelize;
+  const { STRING, BOOLEAN } = app.Sequelize;
   const User = app.model.define('users', {
     phone: {
       type: STRING(11),
@@ -11,6 +11,7 @@ export default app => {
     userName: { type: STRING(50), comment: '用户名' },
     avatar: { type: STRING(100), comment: '头像地址' },
     gender: { type: BOOLEAN, comment: '性别 0女1男' },
+    budget: { type: STRING(50), comment: '每月预算' },
   });
 
   User.sync();
