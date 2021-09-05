@@ -10,7 +10,6 @@ export default app => {
     date: { type: DATE, comment: '账单日期' },
     typeName: {
       type: STRING(50),
-      unique: true,
       allowNull: false,
       comment: '标签的className',
     },
