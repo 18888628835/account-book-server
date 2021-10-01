@@ -1,5 +1,5 @@
 import { Controller } from 'egg';
-
+import { outlayList } from '../mock/typeIcon';
 export default class BillController extends Controller {
   /**
    * 添加账单
@@ -90,5 +90,47 @@ export default class BillController extends Controller {
     if (result[0]) {
       throw app.Success();
     }
+  }
+  public async getTop5StatisticsById() {
+    const { ctx, app } = this;
+    const userInfo = await ctx.service.user.getUserInfoByToken();
+    /**
+     * 根据 id 查询用户消费金额在前5位的消费种类
+     */
+    const [statistics, _] = await ctx.service.bill.getTop5StatisticsById(
+      userInfo.id
+    );
+    /**
+     * 查询用户所有账单金额的总额
+     */
+    const amount = await app.model.Bill.sum('amount', {
+      where: {
+        userId: userInfo.id,
+        payType: 1,
+        deleteFlag: 0,
+      },
+    });
+    // 计算用户消费金额前5位金额总额
+    const statisticsAmount = statistics.reduce(
+      (previousValue, currentValue) => currentValue.count + previousValue,
+      0
+    );
+    // 返回用户消费金额前五位的种类名和占比
+    let statisticsWithName = statistics.map(item => {
+      const tag = outlayList.find(
+        listItem => item.type_name === listItem.typeName
+      );
+      return {
+        name: tag?.tagName,
+        value: Math.round((item.count / amount) * 100),
+      };
+    });
+    //其他消费
+    const exception = {
+      name: '其他',
+      value: Math.round(((amount - statisticsAmount) / amount) * 100),
+    };
+    statisticsWithName.push(exception);
+    throw app.Success('ok', statisticsWithName);
   }
 }

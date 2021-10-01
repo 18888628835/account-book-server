@@ -2,7 +2,7 @@ import { Application } from 'egg';
 
 export default (app: Application) => {
   const {
-    controller: { user, upload, bill },
+    controller: { user, upload, bill, type },
     router,
     middleware,
   } = app;
@@ -17,6 +17,12 @@ export default (app: Application) => {
   router.get('/api/bill/getUserBills', validateToken, bill.getUserBills);
   router.get('/api/bill/getBillsByDate', validateToken, bill.getBillsByDate);
   router.put('/api/bill/updateBill', validateToken, bill.updateBill);
+  router.get(
+    '/api/bill/getStatistics',
+    validateToken,
+    bill.getTop5StatisticsById
+  );
+  router.get('/api/type/getIconList', validateToken, type.getIconList);
   // router.get(
   //   '/api/bill/getBillsForMonth',
   //   validateToken,

@@ -110,4 +110,16 @@ export default class Bill extends Service {
     const result = await app.model.Bill.update({ ...rest }, { where: { id } });
     return result;
   }
+  /**
+   *
+   * @param id 用户 id
+   * @returns  用户消费金额在前五位的消费种类
+   */
+  public async getTop5StatisticsById(id) {
+    const { app } = this;
+    const groupData: [any, any] = await app.model.query(
+      `SELECT type_name,SUM(amount + 0) as count FROM bills  WHERE user_id=${id} AND pay_type =1 AND delete_flag=0 GROUP BY type_name ORDER BY count DESC LIMIT 0,5;`
+    );
+    return groupData;
+  }
 }
