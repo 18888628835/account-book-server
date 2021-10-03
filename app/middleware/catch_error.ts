@@ -3,7 +3,7 @@ export default () => {
   return async function catchError(ctx, next) {
     try {
       await next();
-    } catch (error) {
+    } catch (error: any) {
       const requestUrl = `${ctx.method} ${ctx.path}`;
       if (error instanceof HttpException) {
         //手动抛出错误
