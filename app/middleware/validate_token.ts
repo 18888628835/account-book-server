@@ -9,7 +9,7 @@ export default () => {
     try {
       ctx.app.jwt.verify(token, ctx.app.config.jwt.secret);
       await next();
-    } catch (error: any) {
+    } catch (error) {
       throw error.message === 'jwt expired'
         ? ctx.app.HttpException('token 已过期，请重新登录', 403)
         : error;
