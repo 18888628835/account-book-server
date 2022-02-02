@@ -6,8 +6,10 @@ export default class BillController extends Controller {
    */
   public async add() {
     const { ctx, app } = this;
-    const { payType } = ctx.request.body;
-
+    const { payType, typeName } = ctx.request.body;
+    if (typeName === '') {
+      throw app.HttpException('请选择标签', 400);
+    }
     if (payType !== 1 && payType !== 2) {
       throw app.HttpException('账单类型不正确', 400);
     }
@@ -86,6 +88,7 @@ export default class BillController extends Controller {
     if (rest.payType && rest.payType !== 1 && rest.payType !== 2) {
       throw app.HttpException('账单类型不正确', 400);
     }
+
     const result = await ctx.service.bill.updateBillById();
     if (result[0]) {
       throw app.Success();

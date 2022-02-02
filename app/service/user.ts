@@ -1,3 +1,10 @@
+/*
+ * @Author: 邱彦兮
+ * @Date: 2021-10-04 17:42:10
+ * @LastEditors: 邱彦兮
+ * @LastEditTime: 2022-02-02 19:56:16
+ * @FilePath: /account-book-server/app/service/user.ts
+ */
 import { Service } from 'egg';
 
 export default class User extends Service {
@@ -14,32 +21,11 @@ export default class User extends Service {
    * 根据用户手机号获取用户信息，登录时用
    * @returns 用户信息或者 null
    */
-  public async getUserInfoByPhone() {
+  public async getUserInfoByPhone(phone) {
     const { ctx } = this;
-    const { phone, password } = ctx.request.body;
-    if (phone !== 'test') {
-      await ctx.validate(
-        {
-          phone: {
-            required: true,
-            type: 'string',
-            max: 11,
-            min: 11,
-            format: /^1\d{10}/g,
-          },
-          password: {
-            type: 'string',
-            required: true,
-            max: 12,
-            min: 6,
-          },
-        },
-        { phone, password }
-      );
-    }
 
     const userInfo = await ctx.model.User.findOne({
-      where: { phone: ctx.request.body.phone },
+      where: { phone },
     });
     return userInfo;
   }

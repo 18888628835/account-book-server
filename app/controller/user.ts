@@ -1,3 +1,10 @@
+/*
+ * @Author: 邱彦兮
+ * @Date: 2021-10-04 17:42:10
+ * @LastEditors: 邱彦兮
+ * @LastEditTime: 2022-02-02 20:16:49
+ * @FilePath: /account-book-server/app/controller/user.ts
+ */
 import { Controller } from 'egg';
 import moment = require('moment');
 
@@ -7,22 +14,42 @@ export default class UserController extends Controller {
    */
   public async login() {
     const { ctx, app } = this;
-    const userInfo = await ctx.service.user.getUserInfoByPhone();
-
+    const { phone, password } = ctx.request.body;
+    if (phone !== 'test') {
+      await ctx.validate(
+        {
+          phone: {
+            required: true,
+            type: 'string',
+            max: 11,
+            min: 11,
+            format: /^1\d{10}/g,
+          },
+          password: {
+            type: 'string',
+            required: true,
+            max: 12,
+            min: 6,
+          },
+        },
+        { phone, password }
+      );
+    }
+    const userInfo = await ctx.service.user.getUserInfoByPhone(phone);
+    let token;
+    // 登录逻辑
     if (userInfo?.id) {
-      // 用户存在走登录逻辑
-      if (ctx.request.body.password !== userInfo.password) {
+      if (ctx.request.body.password !== userInfo.password)
         throw app.HttpException('密码错误', 403);
-      }
-      const token = await ctx.service.user.signToken(userInfo);
-      throw app.Success('登录成功', { token });
+
+      token = await ctx.service.user.signToken(userInfo);
+    } else {
+      //注册逻辑
+      let registeredUser = await ctx.service.user.register();
+      token = await ctx.service.user.signToken(registeredUser);
     }
-    //用户不存在走注册逻辑
-    const registeredUser = await ctx.service.user.register();
-    if (registeredUser.id) {
-      const token = await ctx.service.user.signToken(registeredUser);
-      throw app.Success('注册并登录成功', { token });
-    }
+
+    throw app.Success(userInfo?.id ? '登录成功' : '注册成功', { token });
   }
   /**
    * 获取用户信息

@@ -1,4 +1,5 @@
 import { Service } from 'egg';
+import { outlayList, incomeList } from '../mock/typeIcon';
 import moment = require('moment');
 
 export default class Bill extends Service {
@@ -9,9 +10,15 @@ export default class Bill extends Service {
    */
   public async addBillById(id: number) {
     const { ctx, app } = this;
-    const { date, ...restFields } = ctx.request.body;
+    const { date, remark, typeName, ...restFields } = ctx.request.body;
     const result = await app.model.Bill.create({
       ...restFields,
+      typeName,
+      remark: remark
+        ? remark
+        : [...outlayList, ...incomeList].find(
+            item => item.typeName === typeName
+          )?.tagName,
       date: date || Date.now(),
       userId: id,
     });
@@ -106,8 +113,20 @@ export default class Bill extends Service {
   public async updateBillById() {
     const { ctx, app } = this;
     const { id, ...rest } = ctx.request.body;
+    let args = { ...rest };
 
-    const result = await app.model.Bill.update({ ...rest }, { where: { id } });
+    if (rest.remark === '') {
+      let bill = await app.model.Bill.findOne({ where: { id } });
+      console.log('🚀🚀🚀🚀🚀 - bill', bill);
+
+      args = {
+        ...rest,
+        remark: [...outlayList, ...incomeList].find(
+          item => item.typeName === bill.toJSON().typeName
+        )?.tagName,
+      };
+    }
+    const result = await app.model.Bill.update(args, { where: { id } });
     return result;
   }
   /**

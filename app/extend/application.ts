@@ -1,3 +1,11 @@
+/*
+ * @Author: 邱彦兮
+ * @Date: 2021-10-04 17:42:10
+ * @LastEditors: 邱彦兮
+ * @LastEditTime: 2022-02-02 18:27:24
+ * @FilePath: /account-book-server/app/extend/application.ts
+ */
+import Validator from './validator';
 export class HttpException extends Error {
   success: boolean;
   data: any;
@@ -27,4 +35,6 @@ export default {
   Success(message = 'ok', data: any = true) {
     return new Success(message, data);
   },
+
+  Validator,
 };
