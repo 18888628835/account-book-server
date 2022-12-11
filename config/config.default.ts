@@ -12,7 +12,7 @@ export default (appInfo: EggAppInfo) => {
   // sequelize 的初始化配置
   config.sequelize = {
     dialect: 'mysql', // 数据库类型
-    host: '127.0.0.1', // 路径
+    host: 'mysql', // from docker-compose
     port: 3306, // 端口号
     database: 'account_book', // 数据库名称
     username: 'root', // 账号
